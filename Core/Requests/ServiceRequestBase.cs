@@ -108,7 +108,11 @@ namespace Microsoft.Exchange.WebServices.Data
 
         private static Stream WrapStream(Stream responseStream, string contentEncoding)
         {
-            if (contentEncoding.ToLowerInvariant().Contains("gzip"))
+            if (contentEncoding == null)
+            {
+                return responseStream;
+            }
+            else if (contentEncoding.ToLowerInvariant().Contains("gzip"))
             {
                 return new GZipStream(responseStream, CompressionMode.Decompress);
             }
